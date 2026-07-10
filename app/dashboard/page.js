@@ -8,6 +8,8 @@ import TaskCard from "@/components/TaskCard";
 import StreakBadge from "@/components/StreakBadge";
 import RankBadge from "@/components/RankBadge";
 import CheckinCard from "@/components/CheckinCard";
+import CompleteProfileModal from "@/components/CompleteProfileModal";
+import ProfileIcon from "@/components/ProfileIcon";
 import { MODES, justRankedUp } from "@/lib/ranks";
 
 export default function DashboardPage() {
@@ -21,7 +23,10 @@ export default function DashboardPage() {
     current_streak: 0,
     longest_streak: 0,
     mode: null,
+    profile_completed: true,
+    avatar_url: null,
   });
+  const [userId, setUserId] = useState(null);
   const [checkinAnswer, setCheckinAnswer] = useState(null);
   const [justRanked, setJustRanked] = useState(false);
   const [skipRate, setSkipRate] = useState(null);
@@ -43,10 +48,11 @@ export default function DashboardPage() {
       router.push("/login");
       return;
     }
+    setUserId(user.id);
 
     const { data: prof } = await supabase
       .from("profiles")
-      .select("current_streak, longest_streak, mode")
+      .select("current_streak, longest_streak, mode, profile_completed, avatar_url")
       .eq("id", user.id)
       .single();
 
@@ -106,7 +112,7 @@ export default function DashboardPage() {
 
     const { data: prof } = await supabase
       .from("profiles")
-      .select("current_streak, longest_streak, mode")
+      .select("current_streak, longest_streak, mode, profile_completed, avatar_url")
       .eq("id", user.id)
       .single();
     if (prof) {
@@ -159,6 +165,13 @@ export default function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-plum text-cream noise-texture">
+      {!loading && userId && !profile.profile_completed && (
+        <CompleteProfileModal
+          userId={userId}
+          onComplete={() => setProfile((p) => ({ ...p, profile_completed: true }))}
+        />
+      )}
+
       <nav className="max-w-2xl mx-auto flex items-center justify-between px-6 py-6">
         <Link href="/" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>
@@ -222,6 +235,10 @@ export default function DashboardPage() {
           </>
         )}
       </section>
+
+      {!loading && profile.profile_completed && (
+        <ProfileIcon avatarUrl={profile.avatar_url} />
+      )}
     </main>
   );
 }
