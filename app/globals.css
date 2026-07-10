@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #2B1B34;
+  color: #FFF8F0;
+}
+
+::selection {
+  background: #C6F135;
+  color: #120A17;
+}
+
+:focus-visible {
+  outline: 3px solid #C6F135;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.noise-texture {
+  background-image: radial-gradient(rgba(255, 248, 240, 0.045) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
