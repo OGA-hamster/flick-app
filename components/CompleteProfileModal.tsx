@@ -42,30 +42,30 @@ export default function CompleteProfileModal({ userId, onComplete }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm text-black">
-        <h2 className="text-xl font-bold mb-1">Complete your profile</h2>
+      <div className="bg-white rounded-2xl p-6 w-full max-w-sm">
+        <h2 className="text-xl font-bold mb-1 text-gray-900">Complete your profile</h2>
         <p className="text-sm text-gray-500 mb-4">Just a few details to get started.</p>
 
         <input
-          className="w-full border rounded-lg p-2 mb-3"
+          className="w-full border rounded-lg p-2 mb-3 text-gray-900 placeholder-gray-400 bg-white"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          className="w-full border rounded-lg p-2 mb-3"
+          className="w-full border rounded-lg p-2 mb-3 text-gray-900 placeholder-gray-400 bg-white"
           placeholder="Full name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
         <textarea
-          className="w-full border rounded-lg p-2 mb-3"
+          className="w-full border rounded-lg p-2 mb-3 text-gray-900 placeholder-gray-400 bg-white"
           placeholder="Short description (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <select
-          className="w-full border rounded-lg p-2 mb-4"
+          className="w-full border rounded-lg p-2 mb-4 text-gray-900 bg-white"
           value={gender}
           onChange={(e) => setGender(e.target.value)}
         >
