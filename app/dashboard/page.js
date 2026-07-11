@@ -183,6 +183,12 @@ export default function DashboardPage() {
           >
             👥 friends
           </Link>
+<Link
+            href="/chat"
+            className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2"
+          >
+            💬 chat
+          </Link>
           <StreakBadge current={profile.current_streak} longest={profile.longest_streak} />
           <button
             onClick={handleLogout}
