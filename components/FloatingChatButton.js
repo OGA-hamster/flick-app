@@ -1,21 +1,27 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function ProfileIcon({ emoji }) {
+export default function FloatingChatButton() {
+  const pathname = usePathname();
+
+  if (pathname === "/chat") {
+    return null;
+  }
+
   return (
     <Link
-      href="/profile"
-      title="Your profile"
+      href="/chat"
+      aria-label="Open AI Chat"
       style={{
         position: "fixed",
         bottom: "24px",
-        left: "24px",
+        right: "24px",
         zIndex: 9999,
         width: "64px",
         height: "64px",
         borderRadius: "9999px",
-        backgroundColor: "#2B1B34",
-        border: "2px solid #C6F135",
+        backgroundColor: "#D9FF3F",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -24,7 +30,7 @@ export default function ProfileIcon({ emoji }) {
         textDecoration: "none",
       }}
     >
-      {emoji || "🙂"}
+      💬
     </Link>
   );
 }
