@@ -1,4 +1,5 @@
 import "./globals.css";
+import FloatingChatButton from "@/components/FloatingChatButton";
 
 export const metadata = {
   title: "Flick — One dare a day. Zero decisions.",
@@ -17,7 +18,15 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className="font-body antialiased">{children}</body>
+      <body className="font-body antialiased">
+        <div className="ambient-bg">
+          <div className="glow-orb glow-orb-1"></div>
+          <div className="glow-orb glow-orb-2"></div>
+          <div className="glow-orb glow-orb-3"></div>
+        </div>
+        <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+        <FloatingChatButton />
+      </body>
     </html>
   );
 }

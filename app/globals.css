@@ -40,3 +40,163 @@ body {
   background-image: radial-gradient(rgba(255, 248, 240, 0.045) 1px, transparent 1px);
   background-size: 3px 3px;
 }
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.35;
+}
+
+.glow-orb-1 {
+  width: 420px;
+  height: 420px;
+  background: #C6F135;
+  top: -10%;
+  left: -10%;
+  animation: drift1 22s ease-in-out infinite;
+}
+
+.glow-orb-2 {
+  width: 380px;
+  height: 380px;
+  background: #FF6B4A;
+  bottom: -10%;
+  right: -8%;
+  animation: drift2 26s ease-in-out infinite;
+}
+
+.glow-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: #C6F135;
+  top: 40%;
+  right: 20%;
+  opacity: 0.2;
+  animation: drift1 30s ease-in-out infinite reverse;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, 40px); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-50px, -30px); }
+}
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.35;
+}
+
+.glow-orb-1 {
+  width: 420px;
+  height: 420px;
+  background: #C6F135;
+  top: -10%;
+  left: -10%;
+  animation: drift1 22s ease-in-out infinite;
+}
+
+.glow-orb-2 {
+  width: 380px;
+  height: 380px;
+  background: #FF6B4A;
+  bottom: -10%;
+  right: -8%;
+  animation: drift2 26s ease-in-out infinite;
+}
+
+.glow-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: #C6F135;
+  top: 40%;
+  right: 20%;
+  opacity: 0.2;
+  animation: drift1 30s ease-in-out infinite reverse;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, 40px); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-50px, -30px); }
+}
+
+
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.35;
+}
+
+.glow-orb-1 {
+  width: 420px;
+  height: 420px;
+  background: #C6F135;
+  top: -10%;
+  left: -10%;
+  animation: drift1 22s ease-in-out infinite;
+}
+
+.glow-orb-2 {
+  width: 380px;
+  height: 380px;
+  background: #FF6B4A;
+  bottom: -10%;
+  right: -8%;
+  animation: drift2 26s ease-in-out infinite;
+}
+
+.glow-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: #C6F135;
+  top: 40%;
+  right: 20%;
+  opacity: 0.2;
+  animation: drift1 30s ease-in-out infinite reverse;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(60px, 40px); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-50px, -30px); }
+}
