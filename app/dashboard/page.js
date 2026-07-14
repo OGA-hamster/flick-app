@@ -10,6 +10,7 @@ import RankBadge from "@/components/RankBadge";
 import CheckinCard from "@/components/CheckinCard";
 import CompleteProfileModal from "@/components/CompleteProfileModal";
 import ProfileIcon from "@/components/ProfileIcon";
+import FocusPicker from "@/components/FocusPicker";
 import { MODES, justRankedUp } from "@/lib/ranks";
 
 export default function DashboardPage() {
@@ -32,6 +33,7 @@ export default function DashboardPage() {
   const [skipRate, setSkipRate] = useState(null);
   const [refreshedIds, setRefreshedIds] = useState(new Set());
   const [refreshingId, setRefreshingId] = useState(null);
+  const [focusEntry, setFocusEntry] = useState(null);
 
   useEffect(() => {
     load();
@@ -92,6 +94,14 @@ export default function DashboardPage() {
     setTasks(taskRows || []);
     setCompletedIds(done);
     setRefreshedIds(refreshedSet);
+
+    const { data: focus } = await supabase
+      .from("focus_entries")
+      .select("answer, generated_task")
+      .eq("user_id", user.id)
+      .eq("entry_date", today)
+      .maybeSingle();
+    setFocusEntry(focus || null);
 
     setLoading(false);
   }
@@ -183,7 +193,7 @@ export default function DashboardPage() {
           >
             👥 friends
           </Link>
-<Link
+          <Link
             href="/chat"
             className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2"
           >
@@ -208,12 +218,20 @@ export default function DashboardPage() {
               <RankBadge mode={profile.mode} streak={profile.current_streak} justRanked={justRanked} />
             </div>
 
-            <div className="mb-10">
+            <div className="mb-6">
               <CheckinCard
                 question={modeConfig?.question || "Did you follow your plan today?"}
                 onAnswer={handleCheckin}
                 answered={checkinAnswer}
                 skipRate={skipRate}
+              />
+            </div>
+
+            <div className="mb-10">
+              <FocusPicker
+                userId={userId}
+                existingEntry={focusEntry}
+                onGenerated={(task) => setFocusEntry((f) => ({ ...f, generated_task: task }))}
               />
             </div>
 
