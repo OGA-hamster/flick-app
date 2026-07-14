@@ -12,10 +12,12 @@ export default function FriendsPage() {
 
   const [userId, setUserId] = useState(null);
   const [friends, setFriends] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [addingId, setAddingId] = useState(null);
 
   useEffect(() => {
     load();
@@ -35,6 +37,13 @@ export default function FriendsPage() {
 
     const { data } = await supabase.rpc("get_friends", { p_user_id: user.id });
     setFriends(data || []);
+
+    const { data: sugg } = await supabase.rpc("get_friend_suggestions", {
+      p_user_id: user.id,
+      p_limit: 5,
+    });
+    setSuggestions(sugg || []);
+
     setLoading(false);
   }
 
@@ -55,6 +64,19 @@ export default function FriendsPage() {
     } else {
       setMessage(`Request sent to @${username.trim()}`);
       setUsername("");
+      load();
+    }
+  }
+
+  async function handleAddSuggestion(targetUsername, targetId) {
+    setAddingId(targetId);
+    const { error } = await supabase.rpc("send_friend_request", {
+      p_user_id: userId,
+      p_target_username: targetUsername,
+    });
+    setAddingId(null);
+    if (!error) {
+      setSuggestions((prev) => prev.filter((s) => s.id !== targetId));
       load();
     }
   }
@@ -91,7 +113,7 @@ export default function FriendsPage() {
           Add friends by username to compare streaks and keep each other honest.
         </p>
 
-        <form onSubmit={handleAdd} className="flex gap-3 mb-10">
+        <form onSubmit={handleAdd} className="flex gap-3 mb-6">
           <input
             type="text"
             value={username}
@@ -108,13 +130,51 @@ export default function FriendsPage() {
           </button>
         </form>
         {message && (
-          <p className="font-mono text-xs text-coral -mt-6 mb-8">{message}</p>
+          <p className="font-mono text-xs text-coral mb-8">{message}</p>
         )}
 
         {loading ? (
           <div className="font-mono text-sm text-cream/40">Loading…</div>
         ) : (
           <>
+            {suggestions.length > 0 && (
+              <div className="mb-10">
+                <h2 className="font-display font-bold text-lg mb-4">
+                  People you might know
+                </h2>
+                <div className="space-y-3">
+                  {suggestions.map((s) => {
+                    const rank = getRank(s.mode, s.current_streak);
+                    return (
+                      <div
+                        key={s.id}
+                        className="flex items-center justify-between bg-plum-light border border-cream/10 rounded-card px-5 py-4"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl">{rank.emoji}</span>
+                          <div>
+                            <div className="font-display font-bold">
+                              @{s.username}
+                            </div>
+                            <div className="font-mono text-[11px] text-cream/40">
+                              🔥 {s.current_streak} streak
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleAddSuggestion(s.username, s.id)}
+                          disabled={addingId === s.id}
+                          className="bg-lime/20 text-lime border border-lime/40 font-display font-bold text-sm px-4 py-2 rounded-full hover:bg-lime hover:text-ink transition disabled:opacity-50"
+                        >
+                          {addingId === s.id ? "..." : "+ Add"}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {incoming.length > 0 && (
               <div className="mb-10">
                 <h2 className="font-display font-bold text-lg mb-4">
