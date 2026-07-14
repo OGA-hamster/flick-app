@@ -45,7 +45,7 @@ export default function ProfilePage() {
     const { data: prof } = await supabase
       .from("profiles")
       .select(
-        "username, full_name, description, gender, avatar_emoji, mode, current_streak, longest_streak, is_premium, created_at"
+        "username, full_name, description, gender, avatar_emoji, mode, current_streak, longest_streak, is_premium, created_at, mindset_tag, mindset_note, mindset_updated_at"
       )
       .eq("id", user.id)
       .single();
@@ -96,6 +96,14 @@ export default function ProfilePage() {
 
     setProfile((p) => ({ ...p, ...form }));
     setEditing(false);
+  }
+
+  async function handleClearMindset() {
+    await supabase
+      .from("profiles")
+      .update({ mindset_tag: null, mindset_note: null, mindset_updated_at: null })
+      .eq("id", userId);
+    setProfile((p) => ({ ...p, mindset_tag: null, mindset_note: null, mindset_updated_at: null }));
   }
 
   const inputStyle = {
@@ -164,6 +172,28 @@ export default function ProfilePage() {
             <p className="text-xs text-cream/50 font-mono mt-1">longest streak</p>
           </div>
         </div>
+
+        {/* Mindset card */}
+        {profile?.mindset_tag && (
+          <div className="bg-white/5 border border-cream/10 rounded-2xl p-6 mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs text-cream/40 font-mono uppercase">Your Mindset</p>
+              <button
+                onClick={handleClearMindset}
+                className="text-xs text-cream/40 hover:text-coral"
+              >
+                clear
+              </button>
+            </div>
+            <p className="text-lg font-bold text-lime mb-1">{profile.mindset_tag}</p>
+            {profile.mindset_note && (
+              <p className="text-cream/70 text-sm">{profile.mindset_note}</p>
+            )}
+            <p className="text-cream/30 text-xs mt-2 font-mono">
+              Based on your recent chats with Flick AI
+            </p>
+          </div>
+        )}
 
         {!editing ? (
           <>

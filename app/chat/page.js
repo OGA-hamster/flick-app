@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabaseClient";
 
 const WELCOME_MESSAGE = {
   role: "assistant",
@@ -97,6 +98,7 @@ function renderFormattedText(text) {
 }
 
 export default function ChatPage() {
+  const supabase = createClient();
   const [chats, setChats] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [input, setInput] = useState("");
@@ -109,9 +111,21 @@ export default function ChatPage() {
   const [editingMessageIndex, setEditingMessageIndex] = useState(null);
   const [editingMessageValue, setEditingMessageValue] = useState("");
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [userId, setUserId] = useState(null);
   const bottomRef = useRef(null);
   const textareaRef = useRef(null);
   const abortControllerRef = useRef(null);
+
+  useEffect(() => {
+    async function getUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) setUserId(user.id);
+    }
+    getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const savedChats = localStorage.getItem("flick_chats");
@@ -170,6 +184,39 @@ export default function ChatPage() {
     );
   }
 
+  async function maybeUpdateMindset(allMessages) {
+    if (!userId) return;
+    const today = new Date().toDateString();
+    const lastUpdate = localStorage.getItem("flick_mindset_last_update");
+    if (lastUpdate === today) return;
+
+    const userMessages = allMessages.filter((m) => m.role === "user");
+    if (userMessages.length < 2) return;
+
+    try {
+      const res = await fetch("/api/mindset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: allMessages }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.tag) return;
+
+      await supabase
+        .from("profiles")
+        .update({
+          mindset_tag: data.tag,
+          mindset_note: data.note,
+          mindset_updated_at: new Date().toISOString(),
+        })
+        .eq("id", userId);
+
+      localStorage.setItem("flick_mindset_last_update", today);
+    } catch (e) {
+      // Not critical
+    }
+  }
+
   async function sendToAPI(newMessages) {
     setLoading(true);
     const controller = new AbortController();
@@ -186,7 +233,9 @@ export default function ChatPage() {
       const replyMsg = !res.ok
         ? { role: "assistant", content: `Something went wrong: ${data.error || "please try again."}` }
         : { role: "assistant", content: data.reply };
-      updateActiveChat([...newMessages, replyMsg]);
+      const finalMessages = [...newMessages, replyMsg];
+      updateActiveChat(finalMessages);
+      maybeUpdateMindset(finalMessages);
     } catch (err) {
       if (err.name === "AbortError") {
         updateActiveChat([...newMessages, { role: "assistant", content: "(stopped)" }]);
