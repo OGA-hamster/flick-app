@@ -182,43 +182,43 @@ export default function DashboardPage() {
         />
       )}
 
-      <nav className="max-w-2xl mx-auto flex items-center justify-between px-6 py-6">
+      <nav className="page-container flex items-center justify-between py-6">
         <Link href="/" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Link
             href="/friends"
-            className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2"
+            className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2 transition-colors"
           >
             👥 friends
           </Link>
           <Link
             href="/chat"
-            className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2"
+            className="text-xs text-cream/60 hover:text-cream font-mono border border-cream/15 rounded-full px-3 py-2 transition-colors"
           >
             💬 chat
           </Link>
           <StreakBadge current={profile.current_streak} longest={profile.longest_streak} />
           <button
             onClick={handleLogout}
-            className="text-xs text-cream/40 hover:text-cream/70 font-mono"
+            className="text-xs text-cream/40 hover:text-cream/70 font-mono transition-colors"
           >
             log out
           </button>
         </div>
       </nav>
 
-      <section className="max-w-2xl mx-auto px-6 pb-24">
+      <section className="page-container pb-24">
         {loading ? (
           <div className="font-mono text-sm text-cream/40 mt-10">Loading…</div>
         ) : (
-          <>
-            <div className="mt-4 mb-6">
+          <div className="card-spacing">
+            <div>
               <RankBadge mode={profile.mode} streak={profile.current_streak} justRanked={justRanked} />
             </div>
 
-            <div className="mb-6">
+            <div>
               <CheckinCard
                 question={modeConfig?.question || "Did you follow your plan today?"}
                 onAnswer={handleCheckin}
@@ -227,7 +227,7 @@ export default function DashboardPage() {
               />
             </div>
 
-            <div className="mb-10">
+            <div>
               <FocusPicker
                 userId={userId}
                 existingEntry={focusEntry}
@@ -235,28 +235,30 @@ export default function DashboardPage() {
               />
             </div>
 
-            <h2 className="font-display text-xl font-bold mb-2">
-              Today's dares (optional)
-            </h2>
-            <p className="text-cream/50 text-sm mb-6">
-              A few extra mental resets, if you want them.
-            </p>
-            <div className="space-y-6">
-              {tasks.map((task, i) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  index={i}
-                  total={tasks.length}
-                  completed={completedIds.has(task.id)}
-                  onComplete={handleComplete}
-                  onRefresh={handleRefresh}
-                  refreshed={refreshedIds.has(task.id)}
-                  refreshing={refreshingId === task.id}
-                />
-              ))}
+            <div className="pt-4">
+              <h2 className="font-display text-xl font-bold mb-2">
+                Today's dares (optional)
+              </h2>
+              <p className="text-cream/50 text-sm mb-6">
+                A few extra mental resets, if you want them.
+              </p>
+              <div className="space-y-6">
+                {tasks.map((task, i) => (
+                  <TaskCard
+                    key={task.id}
+                    task={task}
+                    index={i}
+                    total={tasks.length}
+                    completed={completedIds.has(task.id)}
+                    onComplete={handleComplete}
+                    onRefresh={handleRefresh}
+                    refreshed={refreshedIds.has(task.id)}
+                    refreshing={refreshingId === task.id}
+                  />
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
       </section>
 
