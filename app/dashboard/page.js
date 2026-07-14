@@ -174,7 +174,7 @@ export default function DashboardPage() {
   const modeConfig = profile.mode ? MODES[profile.mode] : null;
 
   return (
-    <main className="min-h-screen bg-plum text-cream noise-texture">
+    <main className="min-h-screen text-cream noise-texture">
       {!loading && userId && !profile.profile_completed && (
         <CompleteProfileModal
           userId={userId}

@@ -3,7 +3,7 @@
 export default function CheckinCard({ question, onAnswer, answered, skipRate }) {
   if (answered !== null) {
     return (
-      <div className="bg-plum-light border-2 border-lime/30 rounded-card p-8 text-center noise-texture">
+      <div className="bg-white/10 backdrop-blur-xl border-2 border-lime/30 rounded-card p-8 text-center noise-texture">
         <div className="text-4xl mb-3">{answered ? "✅" : "🫡"}</div>
         <p className="font-display font-bold text-lg">
           {answered
@@ -15,7 +15,7 @@ export default function CheckinCard({ question, onAnswer, answered, skipRate }) 
   }
 
   return (
-    <div className="bg-plum-light border-2 border-cream/10 rounded-card p-8 text-center noise-texture">
+    <div className="bg-white/10 backdrop-blur-xl border-2 border-cream/10 rounded-card p-8 text-center noise-texture">
       <p className="font-mono text-xs tracking-widest text-coral mb-4">
         ONE TAP · NO TYPING
       </p>
