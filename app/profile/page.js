@@ -114,7 +114,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-plum text-cream flex items-center justify-center">
+      <main className="min-h-screen  text-cream flex items-center justify-center">
         <p className="font-mono text-sm text-cream/40">Loading…</p>
       </main>
     );
@@ -128,7 +128,7 @@ export default function ProfilePage() {
     : null;
 
   return (
-    <main className="min-h-screen bg-plum text-cream noise-texture pb-24">
+    <main className="min-h-screen  text-cream noise-texture pb-24">
       <nav className="max-w-2xl mx-auto flex items-center justify-between px-6 py-6">
         <Link href="/dashboard" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>

@@ -24,7 +24,7 @@ export default function RankBadge({ mode, streak, justRanked }) {
         </div>
       )}
       <div
-        className={`flex items-center gap-3 bg-plum-light border-2 rounded-card px-5 py-4 transition-all ${
+        className={`flex items-center gap-3 bg-white/10 backdrop-blur-xl border-2 rounded-card px-5 py-4 transition-all ${
           showFlash ? "border-lime scale-105" : "border-cream/10"
         }`}
       >

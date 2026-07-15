@@ -9,10 +9,10 @@ const difficultyLabel = {
 export default function TaskCard({ task, index, total, onComplete, completed, onRefresh, refreshed, refreshing }) {
   return (
     <div
-      className={`relative w-full rounded-card p-8 sm:p-10 border-2 transition-colors ${
+      className={`relative w-full rounded-card p-8 sm:p-10 border-2 backdrop-blur-xl transition-colors ${
         completed
-          ? "bg-plum-light/40 border-lime/30"
-          : "bg-plum-light border-cream/10"
+          ? "bg-white/5 border-lime/30"
+          : "bg-white/10 border-cream/10"
       } noise-texture`}
     >
       <div className="flex items-center justify-between font-mono text-xs tracking-widest text-cream/50 mb-6">

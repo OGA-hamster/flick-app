@@ -27,7 +27,7 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen bg-plum text-cream noise-texture flex items-center justify-center px-6">
+    <main className="min-h-screen  text-cream noise-texture flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <Link href="/" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>
@@ -49,7 +49,7 @@ export default function SignupPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-plum-light border border-cream/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
+              className="w-full bg-white/10 backdrop-blur-xl border border-cream/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
               placeholder="you@example.com"
             />
           </div>
@@ -63,7 +63,7 @@ export default function SignupPage() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-plum-light border border-cream/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
+              className="w-full bg-white/10 backdrop-blur-xl border border-cream/15 rounded-xl px-4 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
               placeholder="At least 6 characters"
             />
           </div>

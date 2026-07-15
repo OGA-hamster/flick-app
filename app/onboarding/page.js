@@ -30,7 +30,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-plum text-cream noise-texture flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen  text-cream noise-texture flex items-center justify-center px-6 py-16">
       <div className="w-full max-w-md">
         <p className="font-mono text-xs tracking-widest text-coral mb-3 text-center">
           ONE QUICK THING
@@ -48,7 +48,7 @@ export default function OnboardingPage() {
               key={key}
               onClick={() => pickMode(key)}
               disabled={saving}
-              className="w-full flex items-center gap-4 bg-plum-light border-2 border-cream/10 hover:border-lime rounded-card px-6 py-5 text-left transition-colors disabled:opacity-50"
+              className="w-full flex items-center gap-4 bg-white/10 backdrop-blur-xl border-2 border-cream/10 hover:border-lime rounded-card px-6 py-5 text-left transition-colors disabled:opacity-50"
             >
               <span className="text-3xl">{mode.emoji}</span>
               <div>

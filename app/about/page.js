@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-plum text-cream noise-texture">
+    <main className="min-h-screen  text-cream noise-texture">
       <nav className="max-w-3xl mx-auto flex items-center justify-between px-6 py-6">
         <Link href="/" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>
