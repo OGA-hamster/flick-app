@@ -350,7 +350,7 @@ export default function ChatPage() {
     .filter((c) => c.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <main className="h-screen bg-plum text-cream noise-texture flex overflow-hidden">
+    <main className="h-screen text-cream noise-texture flex overflow-hidden">
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
@@ -359,7 +359,7 @@ export default function ChatPage() {
       )}
 
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-40 w-72 bg-[#1F1424] border-r border-cream/10 flex flex-col transform transition-transform duration-200 ${
+        className={`fixed md:static inset-y-0 left-0 z-40 w-72 bg-white/10 backdrop-blur-xl border-r border-cream/10 flex flex-col transform transition-transform duration-200 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
