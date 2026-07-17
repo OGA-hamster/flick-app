@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabaseClient";
 import { getRank } from "@/lib/ranks";
+import InviteButton from "@/components/InviteButton";
 
 export default function FriendsPage() {
   const router = useRouter();
   const supabase = createClient();
 
   const [userId, setUserId] = useState(null);
+  const [myUsername, setMyUsername] = useState("");
   const [friends, setFriends] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [username, setUsername] = useState("");
@@ -34,6 +36,13 @@ export default function FriendsPage() {
       return;
     }
     setUserId(user.id);
+
+    const { data: prof } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", user.id)
+      .single();
+    setMyUsername(prof?.username || "");
 
     const { data } = await supabase.rpc("get_friends", { p_user_id: user.id });
     setFriends(data || []);
@@ -95,7 +104,7 @@ export default function FriendsPage() {
   const accepted = friends.filter((f) => f.status === "accepted");
 
   return (
-    <main className="min-h-screen  text-cream noise-texture">
+    <main className="min-h-screen text-cream noise-texture">
       <nav className="max-w-2xl mx-auto flex items-center justify-between px-6 py-6">
         <Link href="/dashboard" className="font-display font-extrabold text-xl">
           flick<span className="text-lime">.</span>
@@ -113,13 +122,15 @@ export default function FriendsPage() {
           Add friends by username to compare streaks and keep each other honest.
         </p>
 
+        <InviteButton username={myUsername} />
+
         <form onSubmit={handleAdd} className="flex gap-3 mb-6">
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter a username"
-            className="flex-1 bg-white/10 backdrop-blur-xl border border-cream/15 rounded-full px-5 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
+            className="flex-1 bg-plum-light border border-cream/15 rounded-full px-5 py-3 text-cream placeholder:text-cream/30 focus:border-lime outline-none"
           />
           <button
             type="submit"
@@ -148,7 +159,7 @@ export default function FriendsPage() {
                     return (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between bg-white/10 backdrop-blur-xl border border-cream/10 rounded-card px-5 py-4"
+                        className="flex items-center justify-between bg-plum-light border border-cream/10 rounded-card px-5 py-4"
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">{rank.emoji}</span>
@@ -184,7 +195,7 @@ export default function FriendsPage() {
                   {incoming.map((f) => (
                     <div
                       key={f.friendship_id}
-                      className="flex items-center justify-between bg-white/10 backdrop-blur-xl border border-cream/10 rounded-card px-5 py-4"
+                      className="flex items-center justify-between bg-plum-light border border-cream/10 rounded-card px-5 py-4"
                     >
                       <span className="font-display font-bold">
                         @{f.username}
@@ -226,7 +237,7 @@ export default function FriendsPage() {
                       return (
                         <div
                           key={f.friendship_id}
-                          className="flex items-center justify-between bg-white/10 backdrop-blur-xl border border-cream/10 rounded-card px-5 py-4"
+                          className="flex items-center justify-between bg-plum-light border border-cream/10 rounded-card px-5 py-4"
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">{rank.emoji}</span>
@@ -261,7 +272,7 @@ export default function FriendsPage() {
                   {outgoing.map((f) => (
                     <div
                       key={f.friendship_id}
-                      className="flex items-center justify-between bg-white/10 backdrop-blur-xl/50 border border-cream/10 rounded-card px-5 py-4"
+                      className="flex items-center justify-between bg-plum-light/50 border border-cream/10 rounded-card px-5 py-4"
                     >
                       <span className="font-display font-bold text-cream/60">
                         @{f.username}
