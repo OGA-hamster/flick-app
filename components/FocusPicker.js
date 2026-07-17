@@ -9,6 +9,9 @@ export default function FocusPicker({ userId, existingEntry, onGenerated }) {
   const supabase = createClient();
   const [answer, setAnswer] = useState(existingEntry?.answer || "");
   const [task, setTask] = useState(existingEntry?.generated_task || null);
+  const [taskHistory, setTaskHistory] = useState(
+    existingEntry?.generated_task ? [existingEntry.generated_task] : []
+  );
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
   const [error, setError] = useState("");
@@ -58,7 +61,7 @@ export default function FocusPicker({ userId, existingEntry, onGenerated }) {
     recognition.start();
   }
 
-  async function generateTask(currentAnswer) {
+  async function generateTask(currentAnswer, history) {
     setLoading(true);
     setError("");
 
@@ -66,7 +69,10 @@ export default function FocusPicker({ userId, existingEntry, onGenerated }) {
       const res = await fetch("/api/focus", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answer: currentAnswer.trim() }),
+        body: JSON.stringify({
+          answer: currentAnswer.trim(),
+          previousTasks: history,
+        }),
       });
       const data = await res.json();
 
@@ -88,6 +94,7 @@ export default function FocusPicker({ userId, existingEntry, onGenerated }) {
       );
 
       setTask(data.task);
+      setTaskHistory((prev) => [...prev, data.task]);
       if (onGenerated) onGenerated(data.task);
     } catch (e) {
       setError("Couldn't reach the assistant. Try again.");
@@ -97,13 +104,13 @@ export default function FocusPicker({ userId, existingEntry, onGenerated }) {
 
   async function handleSubmit() {
     if (!answer.trim() || loading) return;
-    await generateTask(answer);
+    await generateTask(answer, []);
   }
 
   async function handleDone() {
     if (loading) return;
     setDoneCount((c) => c + 1);
-    await generateTask(answer);
+    await generateTask(answer, taskHistory);
   }
 
   if (task) {
