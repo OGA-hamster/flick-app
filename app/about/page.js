@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 export default function AboutPage() {
   return (
     <main className="min-h-screen  text-cream noise-texture">
@@ -14,7 +13,6 @@ export default function AboutPage() {
           Get started
         </Link>
       </nav>
-
       <section className="max-w-2xl mx-auto px-6 py-16">
         <p className="font-mono text-xs tracking-widest text-coral mb-4">
           WHY FLICK EXISTS
@@ -37,9 +35,7 @@ export default function AboutPage() {
           rest. No dashboards to configure, no habits to design from
           scratch — just show up and answer honestly.
         </p>
-
         <div className="border-t border-cream/10 my-12" />
-
         <p className="font-mono text-xs tracking-widest text-coral mb-4">
           FOUNDER
         </p>
@@ -69,15 +65,22 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-
         <div className="border-t border-cream/10 my-12" />
-
         <Link
           href="/signup"
           className="inline-block bg-lime text-ink font-display font-bold px-8 py-4 rounded-full hover:scale-[1.03] active:scale-[0.98] transition-transform"
         >
           Try today's dares →
         </Link>
+        <div className="border-t border-cream/10 my-12" />
+        <div className="flex gap-6 text-xs text-cream/40 font-mono">
+          <Link href="/privacy" className="hover:text-cream/70">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="hover:text-cream/70">
+            Terms of Service
+          </Link>
+        </div>
       </section>
     </main>
   );
