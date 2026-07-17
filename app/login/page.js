@@ -1,10 +1,8 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabaseClient";
-
 export default function LoginPage() {
   const router = useRouter();
   const supabase = createClient();
@@ -12,7 +10,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   async function handleLogin(e) {
     e.preventDefault();
     setError("");
@@ -28,7 +25,6 @@ export default function LoginPage() {
     }
     router.push("/dashboard");
   }
-
   return (
     <main className="min-h-screen  text-cream noise-texture flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
@@ -41,7 +37,6 @@ export default function LoginPage() {
         <p className="text-cream/60 text-sm mb-8">
           Your streak is waiting on you.
         </p>
-
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block font-mono text-xs text-cream/50 mb-2">
@@ -69,9 +64,7 @@ export default function LoginPage() {
               placeholder="••••••••"
             />
           </div>
-
           {error && <p className="text-coral text-sm font-mono">{error}</p>}
-
           <button
             type="submit"
             disabled={loading}
@@ -80,11 +73,15 @@ export default function LoginPage() {
             {loading ? "Logging in…" : "Log in"}
           </button>
         </form>
-
         <p className="text-center text-cream/50 text-sm mt-6">
           New here?{" "}
           <Link href="/signup" className="text-lime">
             Create an account
+          </Link>
+        </p>
+        <p className="text-center text-cream/40 text-xs mt-4">
+          <Link href="/about" className="hover:text-cream">
+            About Flick
           </Link>
         </p>
       </div>
